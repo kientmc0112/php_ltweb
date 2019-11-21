@@ -1,3 +1,6 @@
+<?php
+    session_start();
+?>
 <!DOCTYPE html>
 <html xml:lang="en" lang="en">
 
@@ -12,6 +15,14 @@
     <link rel="stylesheet" type="text/css" href="style/css/style-main.css" />
     <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans" media="all" />
     <title>MELLO</title>
+    <style>
+        .itemabc {
+            width: 20% !important;
+        }
+        .image img {
+            width: 100%;
+        }
+    </style>
 </head>
 
 <body class="home">
@@ -29,15 +40,14 @@
                                 <div class="box-main-menu">
                                     <div class="main-menu">
                                         <ul>
-                                            <li class="item1"><a href="home-01.html">Home</a></li>
-                                            <li class="item2"><a href="grid.html">Tablet</a>
+                                            <li class="item1"><a href="?controller=user&item=home">Home</a></li>
+                                            <li class="item2"><a href="?controller=user&item=grid">Máy tính bảng</a>
                                             </li>
-                                            <li class="item3"><a href="grid.html">Smart phone</a>
+                                            <li class="item3"><a href="?controller=user&item=grid">Điện thoại</a>
                                             </li>
-                                            <li class="item4"><a href="grid.html">Laptop </a></li>
-                                            <li class="item5"><a href="grid.html">Camera</a></li>
-                                            <li class="item5"><a href="grid.html">Desktop </a></li>
-                                            <li class="item5"><a href="grid.html">Accessory </a></li>
+                                            <li class="item4"><a href="?controller=user&item=grid">Laptop</a></li>
+                                            <li class="item5"><a href="?controller=user&item=grid">Máy bàn</a></li>
+                                            <li class="item5"><a href="?controller=user&item=grid">Phụ kiện</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -45,11 +55,31 @@
                             <div class="account-and-cart">
                                 <div class="my-account">
                                     <div class="content">
-                                        <ul class="right">
-                                            <li><a class="top-link-myaccount" href="login.html">Login</a></li>
-                                            <hr>
-                                            <li><a class="top-link-login" href="register.html">Register</a></li>
-                                        </ul>
+                                        <?php
+                                            if( isset($_SESSION['username']) ) {
+                                                if($_SESSION['level'] == 1) {
+                                                    echo
+                                                    "<ul class='right'>
+                                                        <li><a class='top-link-myaccount' href='?controller=account&action=login'>" . $_SESSION['username'] . "</a></li><hr>
+                                                        <li><a class='top-link-login' href='?controller=account&action=login'>Trang admin</a></li><hr>
+                                                        <li><a class='top-link-login' href='?controller=account&action=logout'>Đăng xuất</a></li>
+                                                    </ul>";
+                                                } else {
+                                                    echo
+                                                    "<ul class='right'>
+                                                        <li><a class='top-link-myaccount' href='?controller=account&action=login'>" . $_SESSION['username'] . "</a></li><hr>
+                                                        <li><a class='top-link-login' href='?controller=account&action=logout'>Đăng xuất</a></li>
+                                                    </ul>";
+                                                }
+                                            }
+                                            else {
+                                                echo
+                                                "<ul class='right'>
+                                                    <li><a class='top-link-myaccount' href='?controller=account&action=login'>Đăng nhập</a></li><hr>
+                                                    <li><a class='top-link-login' href='?controller=account&action=register'>Đăng kí</a></li>
+                                                </ul>";
+                                            }
+                                        ?>
                                     </div>
                                 </div>
                                 <div class="box-cart">
@@ -124,20 +154,23 @@
             <div class="container">
                 <div class="row">
                     <div class="title-sp">
-                        NEWEST DEALS
+                        Điện thoại
                         <div class="std">
-                            Get these exclusive online store products.
+                            Xịn xò nhất
                         </div>
                     </div>
                     <div class="block vt-slider vt-slider3">
                         <div class="slider-inner">
                             <div class="container-slider">
                                 <div class="products-grid">
+                                    <?php
+                                        foreach($data1 as $result1) {
+                                    ?>
                                     <div class="item">
                                         <div class="item-wrap">
                                             <div class="item-image">
                                                 <a class="product-image no-touch" href="#" title="Ipad Air and iOS7">
-                                                    <img class="first_image" src="images/product/larg/demo1.jpg" alt="Product demo" />
+                                                    <img class="first_image" src="images/product/larg/<?php echo $result1['url'] ?>" alt="Product demo" />
                                                 </a>
                                                 <div class="item-btn">
                                                     <div class="box-inner">
@@ -152,18 +185,18 @@
                                             </div>
                                             <div class="pro-info">
                                                 <div class="pro-inner">
-                                                    <div class="pro-title product-name"><a href="detail.html">Ipad Air and iOS7</a></div>
+                                                    <div class="pro-title product-name"><a href="detail.html"><?php echo $result1['name'] ?></a></div>
                                                     <div class="pro-content">
                                                         <div class="wrap-price">
                                                             <div class="price-box">
                                                                 <span class="regular-price">
-												 <span class="price">$800.00</span></span>
+												 <span class="price"><?php echo '$'.$result1['cost'] ?></span></span>
                                                                 <p class="special-price">
                                                                     <span class="price">$1.459.00</span>
                                                                 </p>
                                                             </div>
                                                         </div>
-                                                        <!-- 
+                                                        <!--
 										   <div class="ratings">
 											  <div class="rating-box">
 												 <div class="rating" style="width:80%"></div>
@@ -176,7 +209,10 @@
                                         </div>
                                         <!--end item wrap -->
                                     </div>
-                                    <div class="item">
+                                    <?php
+                                        }
+                                    ?>
+                                    <!-- <div class="item">
                                         <div class="item-wrap">
                                             <div class="item-image">
                                                 <a class="product-image no-touch" href="#" title="Ipad Air and iOS7">
@@ -206,17 +242,10 @@
                                                                 </p>
                                                             </div>
                                                         </div>
-                                                        <!-- <div class="ratings">
-											  <div class="rating-box">
-												 <div class="rating" style="width:80%"></div>
-											  </div>
-											  <span class="amount"><a href="#">1(s)</a></span>
-										   </div> -->
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <!--end item wrap -->
                                     </div>
                                     <div class="item">
                                         <div class="item-wrap">
@@ -248,17 +277,10 @@
                                                                 </p>
                                                             </div>
                                                         </div>
-                                                        <!-- div class="ratings">
-											  <div class="rating-box">
-												 <div class="rating" style="width:80%"></div>
-											  </div>
-											  <span class="amount"><a href="#">1(s)</a></span>
-										   </div> -->
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <!--end item wrap -->
                                     </div>
                                     <div class="item">
                                         <div class="item-wrap">
@@ -290,17 +312,10 @@
                                                                 </p>
                                                             </div>
                                                         </div>
-                                                        <!-- <div class="ratings">
-											  <div class="rating-box">
-												 <div class="rating" style="width:80%"></div>
-											  </div>
-											  <span class="amount"><a href="#">1(s)</a></span>
-										   </div> -->
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <!--end item wrap -->
                                     </div>
                                     <div class="item">
                                         <div class="item-wrap">
@@ -332,18 +347,11 @@
                                                                 </p>
                                                             </div>
                                                         </div>
-                                                        <!-- <div class="ratings">
-											  <div class="rating-box">
-												 <div class="rating" style="width:80%"></div>
-											  </div>
-											  <span class="amount"><a href="#">1(s)</a></span>
-										   </div> -->
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <!--end item wrap -->
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                             <div class="navslider">
@@ -361,21 +369,65 @@
             <div class="container">
                 <div class="row">
                     <div class="title-sp">
-                        BEST SELLING
+                        Máy tính bảng
                         <div class="std">
-                            Getting a new line? Check out Theone affordable plans
+                            Hiện đại nhất
                         </div>
-                        <ul class="view-more">
-                            <li><a href="#">View more Laptops</a></li>
-                            <li><a href="#">View more Desktops</a></li>
-                        </ul>
                     </div>
                     <div class="block vt-slider vt-slider4">
                         <div class="slider-inner">
                             <div class="container-slider">
                                 <div class="products-grid">
                                     <div class="item">
+                                        <?php
+                                            foreach($data2 as $result2) {
+                                        ?>
                                         <div class="item-wrap">
+                                            <div class="item-image">
+                                                <a class="product-image no-touch" href="#" title="Ipad Air and iOS7">
+                                                    <img class="first_image" src="images/product/larg/<?php echo $result2['url'] ?>" alt="Product demo" />
+                                                </a>
+                                            </div>
+                                            <div class="product-shop">
+                                                <div class="pro-info">
+                                                    <div class="pro-inner">
+                                                        <div class="pro-title product-name"><a href="detail.html"><?php echo $result2['name'] ?></a></div>
+                                                        <div class="pro-content">
+                                                            <div class="wrap-price">
+                                                                <div class="price-box">
+                                                                    <span class="regular-price">
+													 <span class="price"><?php echo '$'.$result2['cost'] ?></span></span>
+                                                                    <p class="special-price">
+                                                                        <span class="price">$1.459.00</span>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="ratings">
+                                                                <div class="rating-box">
+                                                                    <div class="rating" style="width:80%"></div>
+                                                                </div>
+                                                                <span class="amount"><a href="#">1(s)</a></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="item-btn">
+                                                    <div class="box-inner">
+                                                        <a title="Add to wishlist" href="#" class="link-wishlist">&nbsp;</a>
+                                                        <a title="Add to compare" href="#" class="link-compare">&nbsp;</a>
+                                                        <span class="qview">
+										<a class="vt_quickview_handler" data-original-title="Quick View" data-placement="left" data-toggle="tooltip" href="#"><span>Quick View</span></a>
+                                                        </span>
+                                                        <a title="Add to cart" class="btn-cart" href="#">&nbsp;</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <?php
+                                            }
+                                        ?>
+                                        <!--end item wrap -->
+                                        <!-- <div class="item-wrap">
                                             <div class="item-image">
                                                 <a class="product-image no-touch" href="#" title="Ipad Air and iOS7">
                                                     <img class="first_image" src="images/product/larg/demo1.jpg" alt="Product demo" />
@@ -415,51 +467,9 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> -->
                                         <!--end item wrap -->
-                                        <div class="item-wrap">
-                                            <div class="item-image">
-                                                <a class="product-image no-touch" href="#" title="Ipad Air and iOS7">
-                                                    <img class="first_image" src="images/product/larg/demo1.jpg" alt="Product demo" />
-                                                </a>
-                                            </div>
-                                            <div class="product-shop">
-                                                <div class="pro-info">
-                                                    <div class="pro-inner">
-                                                        <div class="pro-title product-name"><a href="detail.html">Ipad Air and iOS7</a></div>
-                                                        <div class="pro-content">
-                                                            <div class="wrap-price">
-                                                                <div class="price-box">
-                                                                    <span class="regular-price">
-													 <span class="price">$800.00</span></span>
-                                                                    <p class="special-price">
-                                                                        <span class="price">$1.459.00</span>
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                            <div class="ratings">
-                                                                <div class="rating-box">
-                                                                    <div class="rating" style="width:80%"></div>
-                                                                </div>
-                                                                <span class="amount"><a href="#">1(s)</a></span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="item-btn">
-                                                    <div class="box-inner">
-                                                        <a title="Add to wishlist" href="#" class="link-wishlist">&nbsp;</a>
-                                                        <a title="Add to compare" href="#" class="link-compare">&nbsp;</a>
-                                                        <span class="qview">
-										<a class="vt_quickview_handler" data-original-title="Quick View" data-placement="left" data-toggle="tooltip" href="#"><span>Quick View</span></a>
-                                                        </span>
-                                                        <a title="Add to cart" class="btn-cart" href="#">&nbsp;</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!--end item wrap -->
-                                        <div class="item-wrap">
+                                        <!-- <div class="item-wrap">
                                             <div class="item-image">
                                                 <a class="product-image no-touch" href="#" title="Ipad Air and iOS7">
                                                     <img class="first_image" src="images/product/larg/demo3.jpg" alt="Product demo" />
@@ -499,8 +509,52 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> -->
                                         <!--end item wrap -->
+                                        <!-- <div class="item-wrap">
+                                            <div class="item-image">
+                                                <a class="product-image no-touch" href="#" title="Ipad Air and iOS7">
+                                                    <img class="first_image" src="images/product/larg/demo1.jpg" alt="Product demo" />
+                                                </a>
+                                            </div>
+                                            <div class="product-shop">
+                                                <div class="pro-info">
+                                                    <div class="pro-inner">
+                                                        <div class="pro-title product-name"><a href="detail.html">Ipad Air and iOS7</a></div>
+                                                        <div class="pro-content">
+                                                            <div class="wrap-price">
+                                                                <div class="price-box">
+                                                                    <span class="regular-price">
+													 <span class="price">$800.00</span></span>
+                                                                    <p class="special-price">
+                                                                        <span class="price">$1.459.00</span>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="ratings">
+                                                                <div class="rating-box">
+                                                                    <div class="rating" style="width:80%"></div>
+                                                                </div>
+                                                                <span class="amount"><a href="#">1(s)</a></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="item-btn">
+                                                    <div class="box-inner">
+                                                        <a title="Add to wishlist" href="#" class="link-wishlist">&nbsp;</a>
+                                                        <a title="Add to compare" href="#" class="link-compare">&nbsp;</a>
+                                                        <span class="qview">
+											<a class="vt_quickview_handler" data-original-title="Quick View" data-placement="left" data-toggle="tooltip" href="#"><span>Quick View</span></a>
+                                                        </span>
+                                                        <a title="Add to cart" class="btn-cart" href="#">&nbsp;</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> -->
+                                        <!--end item wrap -->
+                                    </div>
+                                    <!-- <div class="item">
                                         <div class="item-wrap">
                                             <div class="item-image">
                                                 <a class="product-image no-touch" href="#" title="Ipad Air and iOS7">
@@ -542,52 +596,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <!--end item wrap -->
-                                    </div>
-                                    <div class="item">
-                                        <div class="item-wrap">
-                                            <div class="item-image">
-                                                <a class="product-image no-touch" href="#" title="Ipad Air and iOS7">
-                                                    <img class="first_image" src="images/product/larg/demo1.jpg" alt="Product demo" />
-                                                </a>
-                                            </div>
-                                            <div class="product-shop">
-                                                <div class="pro-info">
-                                                    <div class="pro-inner">
-                                                        <div class="pro-title product-name"><a href="detail.html">Ipad Air and iOS7</a></div>
-                                                        <div class="pro-content">
-                                                            <div class="wrap-price">
-                                                                <div class="price-box">
-                                                                    <span class="regular-price">
-													 <span class="price">$800.00</span></span>
-                                                                    <p class="special-price">
-                                                                        <span class="price">$1.459.00</span>
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                            <div class="ratings">
-                                                                <div class="rating-box">
-                                                                    <div class="rating" style="width:80%"></div>
-                                                                </div>
-                                                                <span class="amount"><a href="#">1(s)</a></span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="item-btn">
-                                                    <div class="box-inner">
-                                                        <a title="Add to wishlist" href="#" class="link-wishlist">&nbsp;</a>
-                                                        <a title="Add to compare" href="#" class="link-compare">&nbsp;</a>
-                                                        <span class="qview">
-											<a class="vt_quickview_handler" data-original-title="Quick View" data-placement="left" data-toggle="tooltip" href="#"><span>Quick View</span></a>
-                                                        </span>
-                                                        <a title="Add to cart" class="btn-cart" href="#">&nbsp;</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--end item wrap -->
+                                    </div> -->
                                 </div>
                             </div>
                         </div>
@@ -604,11 +613,11 @@
         <div class="position-08">
             <div class="container">
                 <div class="title-sp">
-                    <h2>The shop</h2>
+                    <h2>Phụ kiện</h2>
                     <ul class="nav nav-tabs">
-                        <li class="active"><a data-toggle="tab" href="#tab1">New arrivals</a></li>
-                        <li><a data-toggle="tab" href="#tab2">POPULAR PRODUCTS</a></li>
-                        <li><a data-toggle="tab" href="#tab3">Specail products</a></li>
+                        <li class="active"><a data-toggle="tab" href="#tab1">Chính hãng</a></li>
+                       <!--  <li><a data-toggle="tab" href="#tab2">POPULAR PRODUCTS</a></li>
+                       <li><a data-toggle="tab" href="#tab3">Specail products</a></li> -->
                     </ul>
                 </div>
                 <div class="tab-content">
@@ -617,11 +626,14 @@
                             <div class="slider-inner">
                                 <div class="container-slider">
                                     <div class="products-grid">
+                                        <?php
+                                            foreach($data3 as $result3) {
+                                        ?>
                                         <div class="item">
                                             <div class="item-wrap">
                                                 <div class="item-image">
                                                     <a class="product-image no-touch" href="#" title="Ipad Air and iOS7">
-                                                        <img class="first_image" src="images/product/larg/demo1.jpg" alt="Product demo" />
+                                                        <img class="first_image" src="images/product/larg/<?php echo $result3['url'] ?>" alt="Product demo" />
                                                     </a>
                                                     <div class="item-btn">
                                                         <div class="box-inner">
@@ -636,12 +648,12 @@
                                                 </div>
                                                 <div class="pro-info">
                                                     <div class="pro-inner">
-                                                        <div class="pro-title product-name"><a href="detail.html">Ipad Air and iOS7</a></div>
+                                                        <div class="pro-title product-name"><a href="detail.html"><?php echo $result3['name'] ?></a></div>
                                                         <div class="pro-content">
                                                             <div class="wrap-price">
                                                                 <div class="price-box">
                                                                     <span class="regular-price">
-													 <span class="price">$800.00</span></span>
+													 <span class="price"><?php echo '$'.$result3['cost'] ?></span></span>
                                                                     <p class="special-price">
                                                                         <span class="price">$1.459.00</span>
                                                                     </p>
@@ -659,7 +671,10 @@
                                             </div>
                                             <!--end item wrap -->
                                         </div>
-                                        <div class="item">
+                                        <?php
+                                            }
+                                        ?>
+                                        <!-- <div class="item">
                                             <div class="item-wrap">
                                                 <div class="item-image">
                                                     <a class="product-image no-touch" href="#" title="Ipad Air and iOS7">
@@ -689,17 +704,10 @@
                                                                     </p>
                                                                 </div>
                                                             </div>
-                                                            <!-- <div class="ratings">
-												  <div class="rating-box">
-													 <div class="rating" style="width:80%"></div>
-												  </div>
-												  <span class="amount"><a href="#">1(s)</a></span>
-											   </div> -->
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!--end item wrap -->
                                         </div>
                                         <div class="item">
                                             <div class="item-wrap">
@@ -731,17 +739,10 @@
                                                                     </p>
                                                                 </div>
                                                             </div>
-                                                            <!-- <div class="ratings">
-												  <div class="rating-box">
-													 <div class="rating" style="width:80%"></div>
-												  </div>
-												  <span class="amount"><a href="#">1(s)</a></span>
-											   </div> -->
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!--end item wrap -->
                                         </div>
                                         <div class="item">
                                             <div class="item-wrap">
@@ -773,17 +774,10 @@
                                                                     </p>
                                                                 </div>
                                                             </div>
-                                                            <!-- <div class="ratings">
-												  <div class="rating-box">
-													 <div class="rating" style="width:80%"></div>
-												  </div>
-												  <span class="amount"><a href="#">1(s)</a></span>
-											   </div> -->
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!--end item wrap -->
                                         </div>
                                         <div class="item">
                                             <div class="item-wrap">
@@ -815,18 +809,11 @@
                                                                     </p>
                                                                 </div>
                                                             </div>
-                                                            <!-- <div class="ratings">
-												  <div class="rating-box">
-													 <div class="rating" style="width:80%"></div>
-												  </div>
-												  <span class="amount"><a href="#">1(s)</a></span>
-											   </div> -->
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!--end item wrap -->
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                                 <div class="navslider">
@@ -837,7 +824,7 @@
                             </div>
                         </div>
                     </div>
-                    <div id="tab2" class="tab-pane fade">
+                    <!-- <div id="tab2" class="tab-pane fade">
                         <div class="block vt-slider vt-slider5">
                             <div class="slider-inner">
                                 <div class="container-slider">
@@ -879,7 +866,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!--end item wrap -->
                                         </div>
                                         <div class="item">
                                             <div class="item-wrap">
@@ -918,7 +904,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!--end item wrap -->
                                         </div>
                                         <div class="item">
                                             <div class="item-wrap">
@@ -957,7 +942,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!--end item wrap -->
                                         </div>
                                         <div class="item">
                                             <div class="item-wrap">
@@ -996,7 +980,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!--end item wrap -->
                                         </div>
                                         <div class="item">
                                             <div class="item-wrap">
@@ -1035,7 +1018,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!--end item wrap -->
                                         </div>
                                     </div>
                                 </div>
@@ -1047,8 +1029,8 @@
                             </div>
 
                         </div>
-                    </div>
-                    <div id="tab3" class="tab-pane fade">
+                    </div> -->
+                    <!-- <div id="tab3" class="tab-pane fade">
                         <div class="block vt-slider vt-slider6">
                             <div class="slider-inner">
                                 <div class="container-slider">
@@ -1090,7 +1072,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!--end item wrap -->
                                         </div>
                                         <div class="item">
                                             <div class="item-wrap">
@@ -1129,7 +1110,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!--end item wrap -->
                                         </div>
                                         <div class="item">
                                             <div class="item-wrap">
@@ -1168,7 +1148,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!--end item wrap -->
                                         </div>
                                         <div class="item">
                                             <div class="item-wrap">
@@ -1207,7 +1186,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!--end item wrap -->
                                         </div>
                                         <div class="item">
                                             <div class="item-wrap">
@@ -1246,7 +1224,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!--end item wrap -->
                                         </div>
                                     </div>
                                 </div>
@@ -1258,7 +1235,7 @@
                             </div>
 
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -1267,12 +1244,12 @@
                 <div class="row">
                     <div class="popular-cate">
                         <div class="title-cate">
-                            Popular Categories
+                            Loại hàng
                         </div>
                         <div class="content">
-                            <div class="item first">
+                            <div class="item first itemabc">
                                 <div class="title">
-                                    <a href="#">Smart phone</a>
+                                    <a href="#">Điện thoại</a>
                                 </div>
                                 <div class="image">
                                     <a href="#"><img src="images/catalog/cate1.png" alt="" /></a>
@@ -1282,25 +1259,23 @@
                                     <a href="#">Samsung</a>,
                                     <a href="#">Nokia</a>
                                 </div>
-                                <a class="view-all" href="#">View all</a>
                             </div>
-                            <div class="item">
+                            <div class="item itemabc">
                                 <div class="title">
-                                    <a href="#">Tables</a>
+                                    <a href="#">Máy tính bảng</a>
                                 </div>
                                 <div class="image">
                                     <a href="#"><img src="images/catalog/cate2.png" alt="" /></a>
                                 </div>
                                 <div class="tag">
                                     <a href="#">Apple</a>,
-                                    <a href="#" class="focus">Samsung</a>,
-                                    <a href="#">Lenovo</a>
+                                    <a href="#">Samsung</a>,
+                                    <a href="#">Nokia</a>
                                 </div>
-                                <a class="view-all">View all</a>
                             </div>
-                            <div class="item">
+                            <div class="item itemabc">
                                 <div class="title">
-                                    <a href="#">laptops</a>
+                                    <a href="#">Laptop</a>
                                 </div>
                                 <div class="image">
                                     <a href="#"><img src="images/catalog/cate3.png" alt="" /></a>
@@ -1308,15 +1283,12 @@
                                 <div class="tag">
                                     <a href="#">Apple</a>,
                                     <a href="#">Samsung</a>,
-                                    <a href="#">Lenovo</a>,
-                                    <a href="#">Sony</a>,
-                                    <a href="#">Dell</a>
+                                    <a href="#">Nokia</a>
                                 </div>
-                                <a class="view-all" href="#">View all</a>
                             </div>
-                            <div class="item">
+                            <div class="item itemabc">
                                 <div class="title">
-                                    <a href="#">desktops</a>
+                                    <a href="#">Máy bàn</a>
                                 </div>
                                 <div class="image">
                                     <a href="#"><img src="images/catalog/cate4.png" alt="" /></a>
@@ -1324,28 +1296,23 @@
                                 <div class="tag">
                                     <a href="#">Apple</a>,
                                     <a href="#">Samsung</a>,
-                                    <a href="#">Lenovo</a>,
-                                    <a href="#">Sony</a>,
-                                    <a href="#">Dell</a>
+                                    <a href="#">Nokia</a>
                                 </div>
-                                <a class="view-all" href="#">View all</a>
                             </div>
-                            <div class="item">
+                            <div class="item last itemabc">
                                 <div class="title">
-                                    <a href="#">Accessories</a>
+                                    <a href="#">Phụ kiện</a>
                                 </div>
                                 <div class="image">
                                     <a href="#"><img src="images/catalog/cate5.png" alt="" /></a>
                                 </div>
                                 <div class="tag">
-                                    <a href="#">Intel</a>,
-                                    <a href="#">Gigabyte</a>,
-                                    <a href="#">Ben</a>,
-                                    <a href="#">Dell</a>
+                                    <a href="#">Apple</a>,
+                                    <a href="#">Samsung</a>,
+                                    <a href="#">Nokia</a>
                                 </div>
-                                <a class="view-all" href="#">View all</a>
                             </div>
-                            <div class="item last">
+                            <!-- <div class="item last">
                                 <div class="title">
                                     <a href="#">Cameras & Photo</a>
                                 </div>
@@ -1359,7 +1326,7 @@
                                     <a href="#">Nikon</a>
                                 </div>
                                 <a class="view-all" href="#">View all</a>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -1385,7 +1352,11 @@
                         <div class="box-tweeter col-lg-6 col-md-6 col-sm-6 col-xs-6">
                             <div class="block-title"><span>tweeter</span></div>
                             <div class="content">
-                                Leo aliquet, dictum orci at, varius ligula. Duis aliquet pellentesque tincidunt. Vestibulum finibus ceo aliquet, dictum orci at, varius ligula. Duis aliquet
+                                Yêu Tổ quốc, yêu đồng bào<br>
+                                Học tập tốt, lao động tốt<br>
+                                Đoàn kết tốt, kỷ luật tốt<br>
+                                Giữ gìn vệ sinh thật tốt<br>
+                                Khiêm tốn, thật thà, dũng cảm.
                             </div>
                         </div>
                     </div>

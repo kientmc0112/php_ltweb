@@ -6,7 +6,7 @@
     <div class="card mb-3">
         <div class="card-header">
             <i class="fas fa-plus"></i>
-            <span>Add Product</span>
+            <span>Thêm sản phẩm</span>
         </div>
         <div class="card-body">
             <div class="row">
@@ -64,9 +64,9 @@
                                                         </div>
                                                         <div class="col-md-4">
                                                             <div class="form-group">
-                                                                <label>Ảnh sản phẩm</label>
-                                                                <input class="btn btn-primary" name="file" id="file" onclick="document.getElementById('file1').click();" value="Upload">
-                                                                <input type="file" name="file1" id="file1" onchange="readURL(this)" style="visibility: hidden">
+                                                                <label>Ảnh sản phẩm</label><br>
+                                                                <input class="btn btn-primary" name="file" id="file" onclick="document.getElementById('file1').click();" value="Upload" type="button">
+                                                                <input type="file" name="file1" id="file1" onchange="readURL(this)" style="display: none">
                                                                 <img id="image1" class="thumbnail" width="100%" src="images/product/<?php echo $result['image'] ?>">
                                                             </div>
                                                         </div>
@@ -78,7 +78,6 @@
                                                         </div>
                                                         <div class="col-md-12">
                                                             <button class="btn btn-success" name="add" type="submit">Thêm sản phẩm</button>
-                                                            <button class="btn btn-danger" type="reset">Huỷ bỏ</button>
                                                         </div>
                                                     </div>
                                                     </form>

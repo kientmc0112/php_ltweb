@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Admin - Login</title>
+    <title>Đăng nhập</title>
 
     <!-- Custom foSnts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -30,24 +30,24 @@
 
     <div class="container">
         <div class="card card-login mx-auto mt-5">
-            <div class="card-header">Login</div>
+            <div class="card-header">Đăng nhập</div>
             <div class="card-body">
                 <form method="POST">
                     <div class="form-group">
-                        <input type="text" name="username" class="form-control" placeholder="Email address" required="required" autofocus="autofocus">
+                        <input type="text" name="username" class="form-control" placeholder="Username" required="required" autofocus="autofocus">
                     </div>
                     <div class="form-group">
                         <input type="password" name="password" class="form-control" placeholder="Password" required="required">
                     </div>
                     <div class="form-group">
                         <div class="checkbox">
-                            <input type="checkbox" name="remmember" value="remember-me"> Remember Password
+                            <input type="checkbox" name="remmember" value="remember-me"> Nhớ mật khẩu
                         </div>
                     </div>
-                    <button class="btn btn-primary btn-block" type="submit" name="login">Login</button>
+                    <button class="btn btn-primary btn-block" type="submit" name="login">Dăng nhập</button>
                 </form>
                 <div class="text-center">
-                    <a class="d-block small mt-3" href="?controller=account&action=register">Register an Account</a>
+                    <a class="d-block small mt-3" href="?controller=account&action=register">Đăng kí</a>
                 </div>
             </div>
         </div>

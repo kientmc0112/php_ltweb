@@ -153,14 +153,35 @@
 			return $data;
 		}
 
+		public function getCategoryProduct($id) {
+			$sql = "SELECT * FROM products WHERE category_id='$id'";
+			$this->execute($sql);
+			if($this->getRow() == 0) {
+				$data = 0;
+			}
+			else {
+				while($datas = mysqli_fetch_array($this->result)) {
+					$data[] = $datas;
+				}
+			}
+			return $data;
+		}
+
 		public function deleteProduct($id) {
 			$sql = "DELETE FROM products WHERE id='$id'";
 			return $this->execute($sql);
 		}
 
-		/*Function get information*/
-		// public function getData($tblname, $data, $type) {
-		// 	$sql = "SELECT * FROM $tblname WHERE $type = '$data'";
-		// 	$this->execute($sql);
-		// }
+		/*GetInfor*/
+		function getName($id, $table) {
+			$sql = "SELECT * FROM $table WHERE id='$id'";
+			$this->execute($sql);
+			if($this->getRow() != 0) {
+				$data = mysqli_fetch_array($this->result);
+			}
+			else {
+				$data = 0;
+			}
+			return $data['name'];
+		}
 	}

@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Admin - Register</title>
+    <title>Đăng kí</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -31,19 +31,19 @@
 
     <div class="container">
         <div class="card card-register mx-auto mt-5">
-            <div class="card-header">Register an Account</div>
+            <div class="card-header">Đăng kí</div>
             <div class="card-body">
                 <form method="POST">
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="Enter your name ..." name="name">
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Enter your username ..." required="required" name="username">
+                        <input type="text" class="form-control" id="username" placeholder="Enter your username ..." required="required" name="username" onblur="check(this.id)">
                         <p class="alert" id="alertusername">Username đã tồn tại!</p>
                         <p class="alert" id="alertusername1">Username không hợp lệ!</p>
                     </div>
                     <div class="form-group">
-                        <input type="email" class="form-control" placeholder="Enter your email ..." required="required" name="email">
+                        <input type="email" class="form-control" id="email" placeholder="Enter your email ..." required="required" name="email" onblur="check(this.id)">
                         <p class="alert" id="alertemail">Email đã tồn tại!</p>
                         <p class="alert" id="alertemail1">Email không hợp lệ!</p>
                     </div>
@@ -58,10 +58,10 @@
                             </div>
                         </div>
                     </div>
-                    <button class="btn btn-primary btn-block" name="register" type="submit">Register</button>
+                    <button class="btn btn-primary btn-block" name="register" type="submit">Đăng kí</button>
                 </form>
                 <div class="text-center">
-                    <a class="d-block small mt-3" href="?controller=account&action=login">Login Page</a>
+                    <a class="d-block small mt-3" href="?controller=account&action=login">Đăng nhập</a>
                 </div>
             </div>
         </div>

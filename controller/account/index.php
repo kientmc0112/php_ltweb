@@ -2,6 +2,7 @@
     require_once 'model/DBConfig.php';
     $db = new Database;
     $db->connect();
+    session_start();
 
     if(isset($_GET['action'])) {
         $action = $_GET['action'];
@@ -133,7 +134,7 @@
 
         default:
             # code...
-            require_once 'view/index.php';
+            header("Location: ?controller=account&action=login");
             break;
     }
 ?>

@@ -27,11 +27,17 @@
         <script src="js/demo/datatables-demo.js"></script>
         <script src="js/demo/chart-area-demo.js"></script>
 
+        <script type="text/javascript" src="DataTables/datatables.min.js"></script>
+
         <script type="text/javascript">
         function changImg(x) {
             var img = document.getElementById('avatar');
             img.setAttribute('src', x);
         }
-    </script>
+
+        $(document).ready(function() {
+            $('#db_table').DataTable();
+        });
+        </script>
     </body>
 </html>

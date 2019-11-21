@@ -15,7 +15,7 @@
                 $pattern = "#^[A-z0-9]{8,15}$#";
                 break;
             case 'username':
-                $pattern = "#^[A-z0-9_.]{1,25}$#";
+                $pattern = "#^[A-z0-9_.]{5,25}$#";
                 break;
             case 'name':
                 $pattern = "#^[A-z]{1,31}$#";

@@ -5,7 +5,7 @@
     <div class="card mb-3">
         <div class="card-header">
 
-            <span>Edit Category</span>
+            <span>Sửa thể loại</span>
         </div>
         <div class="card-body">
             <div class="row">
@@ -32,7 +32,6 @@
                                                         </div>
                                                         <div class="col-md-12">
                                                             <button class="btn btn-success" name="save" type="submit">Lưu</button>
-                                                            <button class="btn btn-danger" type="reset">Huỷ bỏ</button>
                                                         </div>
                                                     </div>
                                                     </form>

@@ -39,12 +39,7 @@
         default:
             # code...
             $cookie_name = 'auth';
-            if( isset($_COOKIE[$cookie_name]) ) {
-                header("Location: ?controller=account&action=login");
-            }
-            else {
-                header("Location: ?controller=account&action=login");
-            }
+            header("Location: ?controller=user&item=home");
             break;
     }
 ?>

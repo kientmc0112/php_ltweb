@@ -5,11 +5,11 @@
         <div class="container-fluid">
             <div class="card mb-3">
                 <div class="card-header">
-                    <i class="fas fa-table"></i> List Category
+                    <i class="fas fa-table"></i> Danh sách chủng loại
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <table class="table table-bordered" id="db_table" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
                                     <th>STT</th>
@@ -44,10 +44,10 @@
                                             <?php echo $result['summary'] ?>
                                         </td>
                                         <td style="text-align: center">
-                                            <a class="btn btn-success" href="?controller=category&action=edit&id=<?php echo $result['id'] ?>">Edit</a>
+                                            <a class="btn btn-success" href="?controller=category&action=edit&id=<?php echo $result['id'] ?>"><i class="far fa-edit"></i></a>
                                         </td>
                                         <td style="text-align: center">
-                                            <a class="btn btn-danger" href="?controller=category&action=delete&id=<?php echo $result['id'] ?>">Delete</button>
+                                            <a class="btn btn-danger" href="?controller=category&action=delete&id=<?php echo $result['id'] ?>"><i class="far fa-trash-alt"></i></button>
                                     </td>
                                 </tr>
                                 <?php
